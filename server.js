@@ -3,13 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const http = require('http');
-
+const logger = require('morgan');
 const app = express();
 
 // DB Setup
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/stock-view', {
-  useMongoClient: true
-});
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/stock-view');
 
 const server = http.createServer(app);
 const io = require('socket.io').listen(server);
