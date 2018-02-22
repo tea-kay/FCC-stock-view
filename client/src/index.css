@@ -3,3 +3,27 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.stock-list {
+  height: 500px;
+  border: 1px solid black;
+}
+
+.chart-view {
+  height: 500px;
+  border: 1px solid black;
+
+}
+
+.search-bar {
+  font-size: 20px;
+  height: 50px;
+  margin: 12px 0px 0px 16px;
+  border: 0;
+  box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+  outline: none;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}

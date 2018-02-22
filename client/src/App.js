@@ -4,6 +4,8 @@ import io from 'socket.io-client';
 import logo from './logo.svg';
 import './App.css';
 
+import { Grid, Row, Col, ListGroup, ListGroupItem, FormGroup, FormControl } from 'react-bootstrap';
+
 const socket = io.connect();
 
 class App extends Component {
@@ -32,19 +34,30 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Button
-          onClick={this.increaseCounter}
-        >
-          Increase
-        </Button>
-        <h1>{`Hello ${this.state.msg}`}</h1>
+        <div className="container-fluid">
+          <Row>
+            <Col md={4} className="stock-list">
+              <form>
+                <FormGroup bsSize="large" className="row">
+                  <FormControl type="text" placeholder="Search By Stock Ticker" className="search-bar fluid"/>
+                </FormGroup>
+              </form>
+              <ListGroup className="fluid">
+                <ListGroupItem className="row">
+                  <Col md={12}><code>APPL</code><code>$PRICE</code></Col>
+                </ListGroupItem>
+                <ListGroupItem className="row">
+                  <Col md={12}><code>APPL</code><code>$PRICE</code></Col>
+                </ListGroupItem>
+                <ListGroupItem className="row">
+                  <Col md={12}><code>APPL</code><code>$PRICE</code></Col>
+                </ListGroupItem>
+              </ListGroup>
+            </Col>
+            <Col md={8} className="chart-view">
+            </Col>
+          </Row>
+        </div>
       </div>
     );
   }
