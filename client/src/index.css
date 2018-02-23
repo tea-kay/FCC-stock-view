@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .stock-list {
@@ -9,7 +9,7 @@ body {
 }
 
 .chart-view {
-  height: 800px;
+  height: 1000px;
   border-left: .75px solid #eee;
 }
 
@@ -48,10 +48,19 @@ body {
 .stock-info {
   font-size: 24px;
 }
+
 .view-btn-section {
   margin-top: 30px;
 }
 
 .view-btns {
   border: .75px solid #eee;
+}
+
+.date-range {
+  margin-top: 30px;
+}
+
+.from-to {
+  margin: 6px;
 }

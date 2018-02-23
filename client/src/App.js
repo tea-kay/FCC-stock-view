@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import logo from './logo.svg';
 import './App.css';
 
-import { Grid, Row, Col, ListGroup, ListGroupItem, FormGroup, FormControl, PageHeader, Button } from 'react-bootstrap';
+import { Grid, Row, Col, ListGroup, ListGroupItem, FormGroup, FormControl, PageHeader, Button, Label } from 'react-bootstrap';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
 const socket = io.connect();
@@ -51,7 +51,7 @@ class App extends Component {
                 <Col md={8}>
                   <form>
                     <FormGroup bsSize="large" className="row">
-                      <FormControl type="text" placeholder="Search By Stock Ticker" className="search-bar fluid"/>
+                      <FormControl type="text" placeholder="Search By Stock Ticker" className="search-bar fluid" />
                     </FormGroup>
                   </form>
                 </Col>
@@ -77,9 +77,7 @@ class App extends Component {
             <Col md={8} className="chart-view">
               <Row>
                 <Col md={12}>
-                <PageHeader className="header-content">
-                  Stock View App <small>Visualize The Performance of Your Favorite Stocks</small>
-                </PageHeader>
+                <PageHeader className="header-content">Stock View Appx</PageHeader>
                 <br/>
               </Col>
               </Row>
@@ -101,6 +99,22 @@ class App extends Component {
                 <Col md={2} className="view-btns"><Button>6 Months</Button></Col>
                 <Col md={2} className="view-btns"><Button>1 Year</Button></Col>
                 <Col md={2} className="view-btns"><Button>All</Button></Col>
+              </Row>
+              <Row>
+                <Col md={3}>
+                </Col>
+                <Col md={6} className="date-range">
+                  <Row>
+                    <div className="from-to"><h4>From: </h4></div>
+                    <FormGroup>
+                      <FormControl type="date" name="date" id="exampleDate" placeholder="date placeholder" />
+                    </FormGroup>
+                    <div className="from-to"><h4>To: </h4></div>
+                    <FormGroup>
+                      <FormControl type="date" name="date" id="exampleDate" placeholder="date placeholder" />
+                    </FormGroup>
+                  </Row>
+                </Col>
               </Row>
             </Col>
           </Row>
