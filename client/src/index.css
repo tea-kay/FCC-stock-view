@@ -6,13 +6,11 @@ body {
 
 .stock-list {
   height: 100%;
-  border: 1px solid black;
 }
 
 .chart-view {
   height: 800px;
-  border: 1px solid black;
-
+  border-left: .75px solid #eee;
 }
 
 .header-content {
@@ -22,12 +20,16 @@ body {
 .live-chart {
   margin-top: -14px;
   height: 600px;
-  border: 1px solid black;
+}
+
+.single-stock {
+  height: 95px;
+  text-align: center;
+  padding-top: 25px;
 }
 
 .logo-sec {
   padding-top: 26px;
-  border: 1px solid black;
 }
 
 .search-bar {
@@ -45,4 +47,11 @@ body {
 
 .stock-info {
   font-size: 24px;
+}
+.view-btn-section {
+  margin-top: 30px;
+}
+
+.view-btns {
+  border: .75px solid #eee;
 }
