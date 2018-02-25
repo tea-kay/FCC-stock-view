@@ -47,7 +47,7 @@ class App extends Component {
           <Row>
             <Col md={4} className="stock-list">
               <Row>
-                <Col md={4} className="logo-sec">LOGO</Col>
+                <Col md={4} className="logo-sec">STOCKVIEW.IO</Col>
                 <Col md={8}>
                   <form>
                     <FormGroup bsSize="large" className="row">
@@ -76,10 +76,20 @@ class App extends Component {
             </Col>
             <Col md={8} className="chart-view">
               <Row>
-                <Col md={12}>
-                <PageHeader className="header-content">Stock View Appx</PageHeader>
-                <br/>
-              </Col>
+                <Col md={3}>
+                </Col>
+                <Col md={6} className="date-range">
+                  <Row>
+                    <div className="from-to"><h4>From: </h4></div>
+                    <FormGroup>
+                      <FormControl type="date" name="date" id="exampleDate" placeholder="date placeholder" />
+                    </FormGroup>
+                    <div className="from-to"><h4>To: </h4></div>
+                    <FormGroup>
+                      <FormControl type="date" name="date" id="exampleDate" placeholder="date placeholder" />
+                    </FormGroup>
+                  </Row>
+                </Col>
               </Row>
               <Row>
                 <Col md={12} className="live-chart">
@@ -99,22 +109,6 @@ class App extends Component {
                 <Col md={2} className="view-btns"><Button>6 Months</Button></Col>
                 <Col md={2} className="view-btns"><Button>1 Year</Button></Col>
                 <Col md={2} className="view-btns"><Button>All</Button></Col>
-              </Row>
-              <Row>
-                <Col md={3}>
-                </Col>
-                <Col md={6} className="date-range">
-                  <Row>
-                    <div className="from-to"><h4>From: </h4></div>
-                    <FormGroup>
-                      <FormControl type="date" name="date" id="exampleDate" placeholder="date placeholder" />
-                    </FormGroup>
-                    <div className="from-to"><h4>To: </h4></div>
-                    <FormGroup>
-                      <FormControl type="date" name="date" id="exampleDate" placeholder="date placeholder" />
-                    </FormGroup>
-                  </Row>
-                </Col>
               </Row>
             </Col>
           </Row>
