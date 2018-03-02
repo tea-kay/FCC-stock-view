@@ -6,6 +6,8 @@ import './App.css';
 import { Grid, Row, Col, ListGroup, ListGroupItem, FormGroup, FormControl, PageHeader, Button, Label } from 'react-bootstrap';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
+import SearchBar from './components/SearchBar';
+
 const socket = io.connect();
 
 class App extends Component {
@@ -49,11 +51,7 @@ class App extends Component {
               <Row>
                 <Col md={4} className="logo-sec">STOCKVIEW.IO</Col>
                 <Col md={8}>
-                  <form>
-                    <FormGroup bsSize="large" className="row">
-                      <FormControl type="text" placeholder="Search By Stock Ticker" className="search-bar fluid" />
-                    </FormGroup>
-                  </form>
+                  <SearchBar socket={socket} />
                 </Col>
               </Row>
               <ListGroup className="stock-info">
