@@ -48,7 +48,7 @@ class App extends Component {
         <div className="container-fluid">
           <Row>
             <Col md={4} className="stock-list">
-              <Row>
+              <Row> 
                 <Col md={4} className="logo-sec">STOCKVIEW.IO</Col>
                 <Col md={8}>
                   <SearchBar socket={socket} />

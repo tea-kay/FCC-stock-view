@@ -25,7 +25,7 @@ class SearchBar extends Component {
 
   handleAdd(e) {
     if (e.keyCode === 13) {
-      //sent term to server for api call
+      this.props.actions.addStock(this.state.searchTerm);
       this.setState({
         searchTerm: ''
       })
