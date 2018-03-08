@@ -7,6 +7,7 @@ import { Grid, Row, Col, ListGroup, ListGroupItem, FormGroup, FormControl, PageH
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
 import SearchBar from './components/SearchBar';
+import StockList from './container/StockList';
 
 const socket = io.connect();
 
@@ -34,18 +35,6 @@ class App extends Component {
     socket.on('welcome', this.displayWelcome)
   }
 
-  renderStockList() {
-    return this.state.stocks.map(({ stock }) => {
-      return (
-        <ListGroupItem className="row single-stock">
-          <Row>
-            <Col md={6}><code>{stock}</code></Col><Col md={6}><code>$PRICE</code></Col>
-          </Row>
-        </ListGroupItem>
-      )
-    });
-  }
-
   render() {
     const data = [
       {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
@@ -67,24 +56,7 @@ class App extends Component {
                   <SearchBar socket={socket} />
                 </Col>
               </Row>
-              <ListGroup className="stock-info">
-                {this.renderStockList()}
-                <ListGroupItem className="row single-stock">
-                  <Row>
-                    <Col md={6}><code>APPL</code></Col><Col md={6}><code>$PRICE</code></Col>
-                  </Row>
-                </ListGroupItem>
-                <ListGroupItem className="row single-stock">
-                  <Row>
-                    <Col md={6}><code>APPL</code></Col><Col md={6}><code>$PRICE</code></Col>
-                  </Row>
-                </ListGroupItem>
-                <ListGroupItem className="row single-stock">
-                  <Row>
-                    <Col md={6}><code>APPL</code></Col><Col md={6}><code>$PRICE</code></Col>
-                  </Row>
-                </ListGroupItem>
-              </ListGroup>
+              <StockList />
             </Col>
             <Col md={8} className="chart-view">
               <Row>
