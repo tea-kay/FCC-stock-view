@@ -15,7 +15,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      msg: 'Tim'
+      msg: 'Tim',
+      stocks: []
     }
 
     this.displayWelcome = this.displayWelcome.bind(this);
@@ -33,6 +34,18 @@ class App extends Component {
     socket.on('welcome', this.displayWelcome)
   }
 
+  renderStockList() {
+    return this.state.stocks.map(({ stock }) => {
+      return (
+        <ListGroupItem className="row single-stock">
+          <Row>
+            <Col md={6}><code>{stock}</code></Col><Col md={6}><code>$PRICE</code></Col>
+          </Row>
+        </ListGroupItem>
+      )
+    });
+  }
+
   render() {
     const data = [
       {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
@@ -48,13 +61,14 @@ class App extends Component {
         <div className="container-fluid">
           <Row>
             <Col md={4} className="stock-list">
-              <Row> 
+              <Row>
                 <Col md={4} className="logo-sec">STOCKVIEW.IO</Col>
                 <Col md={8}>
                   <SearchBar socket={socket} />
                 </Col>
               </Row>
               <ListGroup className="stock-info">
+                {this.renderStockList()}
                 <ListGroupItem className="row single-stock">
                   <Row>
                     <Col md={6}><code>APPL</code></Col><Col md={6}><code>$PRICE</code></Col>
