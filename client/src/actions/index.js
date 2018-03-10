@@ -12,7 +12,7 @@ const addStock = (stock) => {
   return (dispatch) => {
     dispatch({
       type: ADD_STOCK,
-      payload: { stock }
+      payload: stock
     });
   };
 };

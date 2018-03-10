@@ -14,9 +14,13 @@ class StockList extends Component {
   }
 
   renderStockList() {
-    return this.state.stocks.map(({ stock }) => {
+    if (this.props.stocks.length === 0) {
+      return <h2>No Stocks</h2>
+    }
+
+    return this.props.stocks.map((stock) => {
       return (
-        <ListGroupItem className="row single-stock">
+        <ListGroupItem className="row single-stock" key={stock}>
           <Row>
             <Col md={6}><code>{stock}</code></Col><Col md={6}><code>$PRICE</code></Col>
           </Row>
@@ -29,28 +33,17 @@ class StockList extends Component {
     return (
       <ListGroup className="stock-info">
         {this.renderStockList()}
-        <ListGroupItem className="row single-stock">
-          <Row>
-            <Col md={6}><code>APPL</code></Col><Col md={6}><code>$PRICE</code></Col>
-          </Row>
-        </ListGroupItem>
-        <ListGroupItem className="row single-stock">
-          <Row>
-            <Col md={6}><code>APPL</code></Col><Col md={6}><code>$PRICE</code></Col>
-          </Row>
-        </ListGroupItem>
-        <ListGroupItem className="row single-stock">
-          <Row>
-            <Col md={6}><code>APPL</code></Col><Col md={6}><code>$PRICE</code></Col>
-          </Row>
-        </ListGroupItem>
       </ListGroup>
     )
   }
+}
+
+const mapStateToProps = ({ stocks }) => {
+  return { stocks: stocks.symbols };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return { actions: bindActionCreators(actionCreators, dispatch) }
 }
 
-export default connect(null, mapDispatchToProps)(StockList);
+export default connect(mapStateToProps, mapDispatchToProps)(StockList);
