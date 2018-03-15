@@ -23,6 +23,33 @@ module.exports = (io) => {
         })
       }
     })
+
+    // Adding stocks
+    socket.on('addStock', ({ stock }) => {
+      const lte = moment().format('YYYYMMDD')
+      const gte = moment().subtract(5, 'years').format('YYYYMMDD')
+
+      const newStock = new Symbol({
+        symbol: stock
+      });
+
+      newStock.save(err => {
+        if (err) {
+          socket.emit('errorMessage', { msg: 'Error adding new stock to database' })
+          return;
+        }
+        const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json
+          ?qopts.columns=ticker,date,close
+          &date.gte=${gte}
+          &date.lte=${lte}
+          &ticker=${stock}&api_key=${process.env.QUANDL_API}`
+
+          fetch(quandl).then(response => response.json()).then(({ datatable }) => {
+            const { data } = datatable
+            io.emit('addStockClient', { data, stock })
+          })
+      });
+    });
   })
 }
 

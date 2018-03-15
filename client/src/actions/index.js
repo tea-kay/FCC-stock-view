@@ -1,18 +1,40 @@
-import axios from 'axios';
-
 export const INITIAL_DATA = 'INITIAL_DATA';
+const loadInitialData = ({ data: quandl, tickers }) => {
 
-const loadInitialData = () => {
-  return { type: INITIAL_DATA }
+  const data = quandl.reduce((acc, item) => {
+    const [ ticker, date, price ] = item;
+    const singleDay = {
+      date,
+      [ ticker ]: price
+    };
+
+    const idx = acc.findIndex((obj) => {
+      return obj.date === date;
+    })
+
+    if (idx === -1) {
+      acc.push(singleDay);
+    } else {
+      acc[idx][ticker] = price;
+    }
+
+    return acc;
+  });
+  return {
+    type: INITIAL_DATA,
+    payload: {
+      data,
+      tickers
+    }
+  }
 }
 
 export const ADD_STOCK = 'ADD_STOCK';
-
-const addStock = (stock) => {
+const addStock = ({ data, stock }) => {
   return (dispatch) => {
     dispatch({
       type: ADD_STOCK,
-      payload: stock
+      payload: { data, stock }
     });
   };
 };

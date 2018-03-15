@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 import logo from './logo.svg';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from './actions';
 import './App.css';
 
 import { Grid, Row, Col, ListGroup, ListGroupItem, FormGroup, FormControl, PageHeader, Button, Label } from 'react-bootstrap';
@@ -9,7 +12,7 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import SearchBar from './components/SearchBar';
 import StockList from './container/StockList';
 
-const socket = io.connect();
+const socket = io.connect('http://localhost:3001');
 
 class App extends Component {
   constructor(props) {
@@ -20,19 +23,17 @@ class App extends Component {
       stocks: []
     }
 
-    this.displayWelcome = this.displayWelcome.bind(this);
+    this.handleInitData = this.handleInitData.bind(this);
   }
 
-  displayWelcome({ msg }) {
-    this.setState({ msg })
-  }
-
-  increaseCounter() {
-    socket.emit('increase')
+  handleInitData({ data, tickers }) {
+    // tickers is an array of stock symbols
+    // data is the raw response from quandl
+    this.props.actions.loadInitialData({ data, tickers });
   }
 
   componentDidMount() {
-    socket.on('welcome', this.displayWelcome)
+    socket.on('init', this.handleInitData)
   }
 
   render() {
@@ -102,4 +103,17 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = ({ stocks: { data, symbols } }) => {
+  return {
+    data,
+    symbols
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(actionCreators, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

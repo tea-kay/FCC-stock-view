@@ -1,4 +1,7 @@
-import { ADD_STOCK } from '../actions';
+import {
+  ADD_STOCK,
+  INITIAL_DATA
+} from '../actions';
 
 const INITIAL_STATE = {
   symbols: [],
@@ -7,9 +10,14 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case INITIAL_DATA:
+      return {
+        symbols: action.payload.tickers,
+        data: action.payload.data
+      }
     case ADD_STOCK:
-      const symbols = [...state.symbols, action.payload];
-      return { ...state, symbols }
+      const symbols = [...state.symbols, action.payload.stock];
+      return [...state, symbols];
     default:
       return state;
   };

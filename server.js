@@ -22,5 +22,5 @@ app.get('*', (req, res) => {
 
 const port = process.env.PORT || 3001;
 server.listen(port, () => {
-  console.log('Express server is starting up');
+  console.log('Express server is starting up on', port);
 })

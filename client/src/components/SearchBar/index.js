@@ -17,6 +17,12 @@ class SearchBar extends Component {
     this.handleAdd = this.handleAdd.bind(this);
   }
 
+  componentDidMount() {
+    this.props.socket.on('addStockClient', ({ data, stock }) => {
+      this.props.actions.addStock({ data, stock })
+    });
+  }
+
   handleInput(e) {
     this.setState({
       searchTerm: e.target.value
@@ -25,11 +31,10 @@ class SearchBar extends Component {
 
   handleAdd(e) {
     if (e.keyCode === 13) {
-      socket.emit('addStock', { stock: this.state.searchTerm })
-      this.props.actions.addStock(this.state.searchTerm);
-      this.setState({
-        searchTerm: ''
-      })
+      if (!this.props.stocks.includes(this.state.searchTerm)) {
+        this.props.socket.emit('addStock', { stock: this.state.searchTerm })
+        this.setState({ searchTerm: '' })
+      }
     }
   }
 
