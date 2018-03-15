@@ -25,6 +25,7 @@ class SearchBar extends Component {
 
   handleAdd(e) {
     if (e.keyCode === 13) {
+      socket.emit('addStock', { stock: this.state.searchTerm })
       this.props.actions.addStock(this.state.searchTerm);
       this.setState({
         searchTerm: ''
@@ -51,8 +52,14 @@ class SearchBar extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    stocks: state.stocks.symbols
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return { actions: bindActionCreators(actionCreators, dispatch) }
 }
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

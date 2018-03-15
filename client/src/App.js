@@ -92,7 +92,7 @@ class App extends Component {
                 <Col md={2} className="view-btns"><Button>1 Month</Button></Col>
                 <Col md={2} className="view-btns"><Button>6 Months</Button></Col>
                 <Col md={2} className="view-btns"><Button>1 Year</Button></Col>
-                <Col md={2} className="view-btns"><Button>All</Button></Col>
+                <Col md={2} className="view-btns"><Button>5 Year</Button></Col>
               </Row>
             </Col>
           </Row>
