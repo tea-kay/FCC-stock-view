@@ -12,7 +12,7 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import SearchBar from './components/SearchBar';
 import StockList from './container/StockList';
 
-const socket = io.connect('http://localhost:3001');
+const socket = io.connect();
 
 class App extends Component {
   constructor(props) {
@@ -27,8 +27,6 @@ class App extends Component {
   }
 
   handleInitData({ data, tickers }) {
-    // tickers is an array of stock symbols
-    // data is the raw response from quandl
     this.props.actions.loadInitialData({ data, tickers });
   }
 

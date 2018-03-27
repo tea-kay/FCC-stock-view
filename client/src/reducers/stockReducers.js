@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE, action) => {
       }
     case ADD_STOCK:
       const symbols = [...state.symbols, action.payload.stock];
-      return [...state, symbols];
+      return { data: action.payload.data, symbols };
     default:
       return state;
   };
