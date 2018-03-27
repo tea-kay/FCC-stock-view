@@ -6,7 +6,19 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from './actions';
 import './App.css';
 
-import { Grid, Row, Col, ListGroup, ListGroupItem, FormGroup, FormControl, PageHeader, Button, Label } from 'react-bootstrap';
+import {
+  Grid,
+  Row,
+  Col,
+  ListGroup,
+  ListGroupItem,
+  FormGroup,
+  FormControl,
+  PageHeader,
+  Button,
+  Label
+} from 'react-bootstrap';
+
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
 import SearchBar from './components/SearchBar';
@@ -32,6 +44,19 @@ class App extends Component {
 
   componentDidMount() {
     socket.on('init', this.handleInitData)
+  }
+
+  renderLines() {
+    return this.props.symbols.map(symbol => {
+      return (
+        <Line
+          type="monotone"
+          dataKey={symbol}
+          stroke="#8884d8"
+          key={symbol}
+        />
+      );
+    });
   }
 
   render() {
@@ -76,10 +101,10 @@ class App extends Component {
               </Row>
               <Row>
                 <Col md={12} className="live-chart">
-                  <LineChart width={1200} height={600} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                    <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                  <LineChart width={1200} height={600} data={this.props.data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    {this.renderLines()}
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip />
                   </LineChart>
