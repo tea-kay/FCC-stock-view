@@ -29,23 +29,28 @@ module.exports = (io) => {
       const lte = moment().format('YYYYMMDD')
       const gte = moment().subtract(1, 'months').format('YYYYMMDD')
 
-      const newStock = new Symbol({
-        symbol: stock
-      });
-
-      newStock.save(err => {
-        if (err) {
-          socket.emit('errorMessage', { msg: 'Error adding new stock to database' })
-          return;
+      const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${stock}&api_key=${process.env.QUANDL_API}`
+      fetch(quandl).then(response => response.json()).then(json => {
+        // look at json object, does it have datable?
+        if (json.datatable && json.datatable.data && json.datatable.data.length) {
+          const newStock = new Symbol({ symbol: stock });
+          newStock.save(err => {
+            if (err) {
+              socket.emit('errorMessage', { msg: 'Error adding new stock to database' })
+              return;
+            }
+            const { data } = json.datatable
+            io.emit('addStockClient', { data, stock })
+          });
+        } else {
+          // handle bad quandle response here
+          // if no, emit the 'errorMessage' event saying the symbol does not exist
         }
-        const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${stock}&api_key=${process.env.QUANDL_API}`
-        fetch(quandl).then(response => response.json()).then(({ datatable }) => {
-          const { data } = datatable
-          io.emit('addStockClient', { data, stock })
-        })
-      });
+        // if yes, attempt to save to DB
+          // if saving is successful, emit addStockClient event
+          // if saving is not successful, emit errorMessage event
+      }
     });
-  })
 }
 
 // arr.myMap(function(item, idx) {

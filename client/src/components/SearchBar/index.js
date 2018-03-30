@@ -19,21 +19,32 @@ class SearchBar extends Component {
 
   componentDidMount() {
     this.props.socket.on('addStockClient', ({ data, stock }) => {
-      this.props.actions.addStock({ data, stock })
+      this.props.actions.addStock({ data, stock });
     });
   }
 
   handleInput(e) {
     this.setState({
-      searchTerm: e.target.value
+      searchTerm: e.target.value.toUpperCase()
     })
+  }
+
+  isValidSymbol(symbol) {
+    const regex = /^[A-Z]{2,4}$/;
+    return regex.test(symbol);
   }
 
   handleAdd(e) {
     if (e.keyCode === 13) {
-      if (!this.props.stocks.includes(this.state.searchTerm)) {
+      if (this.isValidSymbol(this.state.searchTerm)) {
+        if (this.props.stocks.includes(this.state.searchTerm)) {
+          alert('This symbol has been added')
+          return;
+        }
         this.props.socket.emit('addStock', { stock: this.state.searchTerm })
         this.setState({ searchTerm: '' })
+      } else {
+        alert('Symbols are 2-4 alphabetic characters');
       }
     }
   }
