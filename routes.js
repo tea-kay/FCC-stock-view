@@ -40,20 +40,8 @@ module.exports = (io) => {
             const { data } = json.datatable
             io.emit('addStockClient', { data, stock })
           });
-        } else {
-          // other stuff
         }
       })
     });
-
-// arr.myMap(function(item, idx) {
-//   return item.toUpperCase()
-// })
-//
-// Array.prototype.myMap = function(cb) {
-//   var result = [];
-//   for (var i = 0; i < this.length; i++) {
-//     result.push(cb(this[i]))
-//   }
-//   return result;
-// }
+  }
+}
