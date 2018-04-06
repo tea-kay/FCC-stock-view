@@ -29,33 +29,22 @@ module.exports = (io) => {
       const lte = moment().format('YYYYMMDD')
       const gte = moment().subtract(1, 'months').format('YYYYMMDD')
 
-      const newStock = new Symbol({
-        symbol: stock
-      });
-
-      newStock.save(err => {
-        if (err) {
-          socket.emit('errorMessage', { msg: 'Error adding new stock to database' })
-          return;
+      const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${stock}&api_key=${process.env.QUANDL_API}`
+      fetch(quandl).then(response => response.json()).then(({ datatable }) => {
+        if (json.datatable && json.datatable.data && json.datatable.data.length) {
+          const newStock = new Symbol({ symbol: stock });
+          newStock.save(err => {
+            if (err) {
+              socket.emit('errorMessage', { msg: 'Error adding new stock to database' })
+              return;
+            }
+            const { data } = datatable
+            io.emit('addStockClient', { data, stock })
+          });
+        } else {
+          // handle errors or invalid stocks here
         }
-        const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${stock}&api_key=${process.env.QUANDL_API}`
-        fetch(quandl).then(response => response.json()).then(({ datatable }) => {
-          const { data } = datatable
-          io.emit('addStockClient', { data, stock })
-        })
-      });
+      })
     });
   })
 }
-
-// arr.myMap(function(item, idx) {
-//   return item.toUpperCase()
-// })
-//
-// Array.prototype.myMap = function(cb) {
-//   var result = [];
-//   for (var i = 0; i < this.length; i++) {
-//     result.push(cb(this[i]))
-//   }
-//   return result;
-// }
