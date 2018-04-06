@@ -29,7 +29,8 @@ module.exports = (io) => {
       const gte = moment().subtract(1, 'months').format('YYYYMMDD')
       const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${stock}&api_key=${process.env.QUANDL_API}`
 
-      fetch(quandl).then(response => response.json()).then(json => {
+      const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${stock}&api_key=${process.env.QUANDL_API}`
+      fetch(quandl).then(response => response.json()).then(({ datatable }) => {
         if (json.datatable && json.datatable.data && json.datatable.data.length) {
           const newStock = new Symbol({ symbol: stock });
           newStock.save(err => {
@@ -37,9 +38,11 @@ module.exports = (io) => {
               socket.emit('errorMessage', { msg: 'Error adding new stock to database' })
               return;
             }
-            const { data } = json.datatable
+            const { data } = datatable
             io.emit('addStockClient', { data, stock })
           });
+        } else {
+          // handle errors or invalid stocks here
         }
       })
     });
