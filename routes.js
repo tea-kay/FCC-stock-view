@@ -24,10 +24,10 @@ module.exports = (io) => {
       }
     })
 
-    socket.on*('addStock', ({ stock }) => {
+    // Adding stocks
+    socket.on('addStock', ({ stock }) => {
       const lte = moment().format('YYYYMMDD')
       const gte = moment().subtract(1, 'months').format('YYYYMMDD')
-      const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${stock}&api_key=${process.env.QUANDL_API}`
 
       const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${stock}&api_key=${process.env.QUANDL_API}`
       fetch(quandl).then(response => response.json()).then(({ datatable }) => {
@@ -46,5 +46,5 @@ module.exports = (io) => {
         }
       })
     });
-  }
+  })
 }
